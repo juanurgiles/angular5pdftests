@@ -4,7 +4,6 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import * as jsPDF from 'jspdf';
-import * as d3 from 'd3';
 
 
 
@@ -30,6 +29,9 @@ export class AppComponent {
     var dd = { content: 'your pdf data' };
     pdfMake.createPdf(dd).download();
   }
+   /**
+   * Ejemplo con jspdf Html2canvas
+   */
   jspdf(){
     html2canvas(this.element.nativeElement).then(function(canvas) {
       var img = canvas.toDataURL("image/png");
@@ -37,5 +39,15 @@ export class AppComponent {
       doc.addImage(img,'JPEG',5,20);
       doc.save('testCanvas.pdf');
       });
+  }
+  html2jspdf(){
+    var doc = new jsPDF();
+    doc.text(20, 20, 'Hello world!');
+    doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+    doc.addPage();
+    doc.text(20, 20, 'Do you like that?');
+
+    // Save the PDF
+    doc.save('Test.pdf');
   }
 }
